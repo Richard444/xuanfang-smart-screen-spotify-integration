@@ -1,0 +1,159 @@
+---
+display:
+  # Specify the display orientation for this theme: portrait or landscape
+  DISPLAY_ORIENTATION: landscape
+
+  # Backplate RGB LED color (for HW revision 'flagship' devices only)
+  DISPLAY_RGB_LED: 16, 223, 239
+
+static_images:
+  # Specify what static images we want to show on the display
+  # You can create additional records here, the name of the entry must be unique and contain at a minimum the PATH.
+  # Images are drawn in the order they are listed below, the top image will be drawn first (so places images back to front)
+  # IMAGE_NAME:
+  #   PATH:
+  #   X:
+  #   Y:
+  #   WIDTH:
+  #   HEIGHT:
+  BACKGROUND:
+    PATH: background.png
+    X: 0
+    Y: 0
+    WIDTH: 480
+    HEIGHT: 320
+
+
+static_text:
+  # Specify what static text we want to show on the display
+  # You can create additional records here, the name of the entry must be unique and contain at a minimum the PATH.
+  # Text are drawn in the order they are listed below, the top text will be drawn first (so places text back to front)
+  # TEXT_NAME:
+  #   TEXT:
+  #   X:
+  #   Y:
+  #   FONT:
+  #   FONT_SIZE:
+  #   FONT_COLOR: 0, 0, 0
+  #   BACKGROUND_COLOR: 255, 255, 255 (if you want solid color background)
+  #   BACKGROUND_IMAGE: path of your background picture (if you want transparent background)
+
+
+STATS:
+  TRACK:
+    INTERVAL: 1
+    PROGRESS:
+      TEXT:
+        SHOW: True
+        SHOW_UNIT: True
+        X: 25
+        Y: 278
+        FONT: generale-mono/GeneraleMonoA.ttf
+        FONT_SIZE: 20
+        FONT_COLOR: 200, 200, 200
+        BACKGROUND_COLOR: 25, 20, 20
+        # BACKGROUND_IMAGE: background.png
+    REMAINDER:
+      TEXT:
+        SHOW: True
+        SHOW_UNIT: True
+        X: 387
+        Y: 278
+        FONT: generale-mono/GeneraleMonoA.ttf
+        FONT_SIZE: 20
+        FONT_COLOR: 200, 200, 200
+        BACKGROUND_COLOR: 25, 20, 20
+        # BACKGROUND_IMAGE: background.png
+    PLAYBACK:  
+      GRAPH:
+        SHOW: True
+        X: 25
+        Y: 265
+        WIDTH: 440
+        HEIGHT: 7
+        MIN_VALUE: 0
+        MAX_VALUE: 100
+        BAR_COLOR: 29, 185, 84
+        BAR_OUTLINE: False
+        BACKGROUND_COLOR: 200, 200, 200
+        # BACKGROUND_IMAGE: background.png
+    ARTIST:
+      TEXT:
+        SHOW: True
+        X: 25
+        Y: 240
+        FONT: generale-mono/GeneraleMonoA.ttf
+        FONT_SIZE: 20
+        FONT_COLOR: 200, 200, 200
+        BACKGROUND_COLOR: 25, 20, 20
+        # BACKGROUND_IMAGE: background.png
+    TITLE:
+      TEXT:
+        SHOW: True
+        X: 25
+        Y: 210
+        FONT: generale-mono/GeneraleMonoA.ttf
+        FONT_SIZE: 27
+        FONT_COLOR: 200, 200, 200
+        BACKGROUND_COLOR: 25, 20, 20
+        # BACKGROUND_IMAGE: background.png
+
+
+  DATE:
+    # In seconds. Longer intervals cause this to refresh more slowly.
+    # Setting to lower values will display near real time data,
+    # but may cause significant CPU usage or the display not to update properly
+    INTERVAL: 1
+    DAY:
+      TEXT:
+        SHOW: True
+        X: 323
+        Y: 29
+        FONT: generale-mono/GeneraleMonoA.ttf
+        FONT_SIZE: 20
+        FONT_COLOR: 200, 200, 200
+        BACKGROUND_COLOR: 25, 20, 20
+        # BACKGROUND_IMAGE: background.png
+    HOUR:
+      TEXT:
+        SHOW: True
+        X: 386
+        Y: 56
+        FONT: generale-mono/GeneraleMonoA.ttf
+        FONT_SIZE: 20
+        FONT_COLOR: 200, 200, 200
+        BACKGROUND_COLOR: 25, 20, 20
+        # BACKGROUND_IMAGE: background.png
+
+DIMAGE:
+  COVERART:
+    INTERVAL: 5
+    CURCOVER:
+      IMAGE:
+        SHOW: True
+        X: 25
+        Y: 25
+        WIDTH: 30
+        HEIGHT: 30
+
+  DEVICE:
+    INTERVAL: 5
+    REPEAT:
+      IMAGE:
+        SHOW: True
+        REPEATCONTEXT: context.png
+        REPEATTRACK: track.png
+        REPEATOFF: off.png
+        X: 210
+        Y: 116
+        WIDTH: 34
+        HEIGHT: 34
+    SHUFFLE:
+      IMAGE:
+        SHOW: True
+        STRUE: true.png
+        SFALSE: false.png
+        X: 210
+        Y: 59
+        WIDTH: 34
+        HEIGHT: 34
