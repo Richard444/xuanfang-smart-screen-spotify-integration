@@ -65,7 +65,7 @@ class LcdCommRevB(LcdComm):
 
     @staticmethod
     def auto_detect_com_port():
-        com_ports = serial.tools.list_ports.comports()
+        com_ports = comports()
         auto_com_port = None
 
         for com_port in com_ports:
@@ -211,8 +211,8 @@ class LcdCommRevB(LcdComm):
 
         assert x <= self.get_width(), 'Image X coordinate must be <= display width'
         assert y <= self.get_height(), 'Image Y coordinate must be <= display height'
-        assert image_height > 0, 'Image width must be > 0'
-        assert image_width > 0, 'Image height must be > 0'
+        assert image_height > 0, 'Image height must be > 0'
+        assert image_width > 0, 'Image width must be > 0'
 
         if self.orientation == Orientation.PORTRAIT or self.orientation == Orientation.LANDSCAPE:
             (x0, y0) = (x, y)
