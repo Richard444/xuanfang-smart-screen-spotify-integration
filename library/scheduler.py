@@ -28,8 +28,9 @@ import library.config as config
 import library.stats as stats
 from library.log import logger
 
-STOPPING = False
+THEME_DATA = config.THEME_DATA
 
+STOPPING = False
 
 def async_job(threadname=None):
     """ wrapper to handle asynchronous threads """
@@ -79,24 +80,24 @@ def schedule(interval):
     return decorator
 
 @async_job("Track_Stats")
-@schedule(timedelta(seconds=config.THEME_DATA['STATS']['TRACK'].get("INTERVAL", None)).total_seconds())
+@schedule(timedelta(seconds=THEME_DATA['STATS']['TRACK'].get("INTERVAL", None)).total_seconds())
 def TrackStats():
     #logger.debug("refresh track stats")
     stats.Track.names()
     stats.Track.progress()
 
 @async_job("Device_Stats")
-@schedule(timedelta(seconds=config.THEME_DATA['DIMAGE']['DEVICE'].get("INTERVAL", None)).total_seconds())
+@schedule(timedelta(seconds=THEME_DATA['DIMAGE']['DEVICE'].get("INTERVAL", None)).total_seconds())
 def DeviceStats():
     stats.Device.track_control()
 
 @async_job("Coverart")
-@schedule(timedelta(seconds=config.THEME_DATA['STATS']['DATE'].get("INTERVAL", None)).total_seconds())
+@schedule(timedelta(seconds=THEME_DATA['STATS']['DATE'].get("INTERVAL", None)).total_seconds())
 def Coverart():
     stats.Cover.cover_art()
 
 @async_job("Date_Stats")
-@schedule(timedelta(seconds=config.THEME_DATA['STATS']['DATE'].get("INTERVAL", None)).total_seconds())
+@schedule(timedelta(seconds=THEME_DATA['STATS']['DATE'].get("INTERVAL", None)).total_seconds())
 def DateStats():
     # logger.debug("Refresh date stats")
     stats.Date.stats()

@@ -28,45 +28,25 @@ from library.log import logger
 
 
 def load_yaml(configfile):
-    with open(configfile, "rt", encoding='utf8') as stream:
+    with open(configfile, "r") as stream:
         yamlconfig = yaml.safe_load(stream)
         return yamlconfig
 
 
 PATH = sys.path[0]
 CONFIG_DATA = load_yaml("config.yaml")
-THEME_DEFAULT = load_yaml("res/themes/default.yaml")
-THEME_DATA = None
 
-
-def copy_default(default, theme):
-    """recursively supply default values into a dict of dicts of dicts ...."""
-    for k, v in default.items():
-        if k not in theme:
-            theme[k] = v
-        if type(v) == type({}):
-            copy_default(default[k], theme[k])
-
-
-def load_theme():
-    global THEME_DATA
+try:
+    theme_path = "res/themes/" + CONFIG_DATA['config']['THEME'] + "/"
+    logger.info("Loading theme %s from %s" % (CONFIG_DATA['config']['THEME'], theme_path + "theme.yaml"))
+    THEME_DATA = load_yaml(theme_path + "theme.yaml")
+    THEME_DATA['PATH'] = theme_path
+except:
+    logger.error("Theme not found or contains errors!")
     try:
-        theme_path = "res/themes/" + CONFIG_DATA['config']['THEME'] + "/"
-        logger.info("Loading theme %s from %s" % (CONFIG_DATA['config']['THEME'], theme_path + "theme.yaml"))
-        THEME_DATA = load_yaml(theme_path + "theme.yaml")
-        THEME_DATA['PATH'] = theme_path
+        sys.exit(0)
     except:
-        logger.error("Theme not found or contains errors!")
-        try:
-            sys.exit(0)
-        except:
-            os._exit(0)
-
-    copy_default(THEME_DEFAULT, THEME_DATA)
-
-
-# Load theme on import
-load_theme()
+        os._exit(0)
 
 # Queue containing the serial requests to send to the screen
 update_queue = queue.Queue()

@@ -176,8 +176,7 @@ class LcdComm(ABC):
             font_size: int = 20,
             font_color: Tuple[int, int, int] = (0, 0, 0),
             background_color: Tuple[int, int, int] = (255, 255, 255),
-            background_image: str = None,
-            align: str = 'left'
+            background_image: str = None
     ):
         # Convert text to bitmap using PIL and display it
         # Provide the background image path to display text with transparent background
@@ -206,19 +205,17 @@ class LcdComm(ABC):
             # The text bitmap is created from provided background image : text with transparent background
             text_image = Image.open(background_image)
 
-        # Get text bounding box
+        # Draw text with specified color & font
         font = ImageFont.truetype("./res/fonts/" + font, font_size)
         d = ImageDraw.Draw(text_image)
-        left, top, text_width, text_height = d.textbbox((0, 0), text, font=font)
-
-        # Draw text with specified color & font, remove left/top margins
-        d.text((x - left, y - top), text, font=font, fill=font_color, align=align)
+        d.text((x, y), text, font=font, fill=font_color)
 
         # Crop text bitmap to keep only the text (also crop if text overflows display)
+        left, top, text_width, text_height = d.textbbox((0, 0), text, font=font)
         text_image = text_image.crop(box=(
             x, y,
-            min(x + text_width - left, self.get_width()),
-            min(y + text_height - top, self.get_height())
+            min(x + text_width, self.get_width()),
+            min(y + text_height, self.get_height())
         ))
 
         self.DisplayPILImage(text_image, x, y)

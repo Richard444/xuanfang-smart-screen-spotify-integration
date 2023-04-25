@@ -1,33 +1,45 @@
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
+import requests
+from PIL import Image
+from io import BytesIO
+import spotipy.util as util
 import sys
-import json
+
 
 scope = "user-read-playback-state"
-sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope,client_id='9945ba88f86e4bb6a0472eae6481a1f8',client_secret='eb1d0755d383480ba3e3c01f318e19da',redirect_uri="http://example.com"))
-cur_track = sp.current_playback()
-cur_album = cur_track['item']['album']['images'][0]['url']
+if len(sys.argv) > 1:
+    username = sys.argv[1]
+else:
+    print("Usage: %s username" % (sys.argv[0],))
+    sys.exit()
 
-print(cur_track)
+token = util.prompt_for_user_token(username, scope)
 
-with open("data_file.json", "r") as write_file:
-    cache_album = json.load(write_file)
+sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope))
 
-try:    
-    if cur_album != cache_album:
-        print("changing the album cover")
-        with open("data_file.json", "w") as write_file:
-            json.dump(cur_album, write_file) 
-except:
-    with open("data_file.json", "w") as write_file:
-            json.dump(cur_album, write_file) 
-                
+# cur_track = sp.current_playback()
+# duration = cur_track['item']["duration_ms"] // 1000
+# progress = cur_track['progress_ms'] //1000
+# name = cur_track['item']['name']
+# artist = cur_track['item']['artists'][0]['name']
+# shuffle = cur_track['shuffle_state']
+# repeat_state = cur_track['repeat_state']
 
-# except spotipy.SpotifyStateError:
-#     print("state error")
+# perc = int(round((progress/duration) * 100))
 
-# except spotipy.SpotifyOauthError:
-#     print("oauth error")
+# mins, secs = divmod((duration-progress), 60)
+# print("-{:0>2}:{:0>2}".format(mins, secs))
 
-# except spotipy.SpotifyException:
-#     print("error") 
+# mins, secs = divmod(progress, 60000)
+# print("{:0>2}:{:0>2}".format(mins, secs))
+
+# print(perc)
+# print(name)
+# print(artist)
+# print(type(shuffle))
+# print(repeat_state + '.png')
+# response = requests.get(cur_track['item']['album']['images'][0]['url'])
+# image = Image.open(BytesIO(response.content))
+# image.thumbnail((30, 30), Image.LANCZOS)
+# image.show()
