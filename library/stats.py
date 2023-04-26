@@ -35,16 +35,21 @@ import library.config as config
 from library.display import display
 from library.log import logger
 
+import os
+from dotenv import load_dotenv
+
 THEME_DATA = config.THEME_DATA
 CONFIG_DATA = config.CONFIG_DATA
 ETH_CARD = CONFIG_DATA["config"]["ETH"]
 WLO_CARD = CONFIG_DATA["config"]["WLO"]
 HW_SENSORS = CONFIG_DATA["config"]["HW_SENSORS"]
+load_dotenv()
 
 try:
     scope = "user-read-playback-state"
-    sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope,client_id='9945ba88f86e4bb6a0472eae6481a1f8',client_secret='eb1d0755d383480ba3e3c01f318e19da',redirect_uri="http://example.com"))
+    sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope,client_id=os.getenv('SPOTIPY_CLIENT_ID'),client_secret=os.getenv('SPOTIPY_CLIENT_SECRET'),redirect_uri="http://example.com"))
 except Exception as e:
+    logger.debug(e)
     sp = None
 
 class Cover:
